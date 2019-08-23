@@ -10,9 +10,9 @@ export default class InterestAccumulatorPage extends Component {
     super(props)
 
     this.state = {
-      monthlyAmount: '0',
-      savingsAmount: '0',
-      interestRate: '4',
+      monthlyAmount: 0,
+      savingsAmount: 0,
+      interestRate: 4,
       interestFrequency: 'monthly',
       data: []
     }
@@ -26,9 +26,9 @@ export default class InterestAccumulatorPage extends Component {
     const { monthlyAmount, savingsAmount, interestRate, interestFrequency } = this.state
 
     calculate({
-      monthlyAmount: parseInt(monthlyAmount),
-      savingsAmount: parseInt(savingsAmount),
-      interestRate: parseInt(interestRate),
+      monthlyAmount: typeof monthlyAmount === 'string' ? parseFloat(monthlyAmount) : monthlyAmount,
+      savingsAmount: typeof savingsAmount === 'string' ? parseFloat(savingsAmount) : savingsAmount,
+      interestRate: typeof interestRate === 'string' ? parseFloat(interestRate) : interestRate,
       interestFrequency
     })
       .then(result => this.setState({
