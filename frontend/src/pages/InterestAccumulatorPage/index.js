@@ -22,13 +22,25 @@ export default class InterestAccumulatorPage extends Component {
     this.updateGraphData()
   }
 
+  // validate the inputs to ensure no NaNs
+  validate = () => {
+    const { monthlyAmount, savingsAmount, interestRate, interestFrequency } = this.state
+
+    return !isNaN(parseFloat(monthlyAmount)) &&
+      !isNaN(parseFloat(savingsAmount)) &&
+      !isNaN(parseFloat(interestRate))
+  }
+
   updateGraphData = () => {
+    // only update if valid input
+    if (!this.validate()) return
+
     const { monthlyAmount, savingsAmount, interestRate, interestFrequency } = this.state
 
     calculate({
-      monthlyAmount: typeof monthlyAmount === 'string' ? parseFloat(monthlyAmount) : monthlyAmount,
-      savingsAmount: typeof savingsAmount === 'string' ? parseFloat(savingsAmount) : savingsAmount,
-      interestRate: typeof interestRate === 'string' ? parseFloat(interestRate) : interestRate,
+      monthlyAmount: parseFloat(monthlyAmount),
+      savingsAmount: parseFloat(savingsAmount),
+      interestRate: parseFloat(interestRate),
       interestFrequency
     })
       .then(result => this.setState({
@@ -38,13 +50,14 @@ export default class InterestAccumulatorPage extends Component {
       .catch(e => console.error(e))
   }
 
-  handleInputChange = field => event => {
-    this.setState({
+  handleInputChange = field => async event => {
+    await this.setState({
       [field]: event.target.value
-    },
-      this.updateGraphData()
-    )
+    })
+
+    this.updateGraphData()
   }
+
 
   render () {
     const { monthlyAmount, savingsAmount, interestRate, interestFrequency, data } = this.state
