@@ -25,18 +25,22 @@ def calculate(request):
     elif interest_frequency == 'annually':
         interest_paid_frequency = 12
 
+    # init the savings amount
     calculated_values = [savings_amount]
     accumulated_interest_amount = 0
 
+    # for each month calculate interest
     for month in range(12 * YEARS_TO_SHOW):
         interest_for_this_month = calculated_values[month] * (interest_rate * 0.01)
         accumulated_interest_amount = accumulated_interest_amount + interest_for_this_month
 
         next_month_amount = (calculated_values[month] + monthly_amount)
+        
+        # depending on when the interest is paid, add to the amount
         if month is not 0 and month % interest_paid_frequency == 0:
             next_month_amount = next_month_amount + accumulated_interest_amount
             accumulated_interest_amount = 0
         calculated_values.append(next_month_amount)
 
-
+    calculated_values.pop(0)
     return JsonResponse({'data': calculated_values})

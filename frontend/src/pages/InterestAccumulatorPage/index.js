@@ -4,6 +4,9 @@ import { CurrencyInput } from "../../components/CurrencyInput"
 import { SliderInput } from "../../components/SliderInput"
 import DisplayGraph from "../../components/DisplayGraph"
 import "./InterestAccumulatorPage.css"
+import { INTEREST_FREQUENCY_OPTIONS } from '../../consts'
+
+
 
 export default class InterestAccumulatorPage extends Component {
   constructor(props) {
@@ -87,6 +90,23 @@ export default class InterestAccumulatorPage extends Component {
             handleChange={this.handleInputChange}
             field={'interestRate'}
           />
+
+          <p className="input-label">
+            How regularly would you like the interest to be paid?
+          </p>
+
+          <select
+            value={interestFrequency}
+            onChange={this.handleInputChange('interestFrequency')}
+          >
+            {INTEREST_FREQUENCY_OPTIONS.map(opt => (
+              <option
+                value={opt.value}
+              >
+                {opt.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="financial-display">
           {/*We have included some sample data here, you will need to replace this
