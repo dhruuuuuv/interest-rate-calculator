@@ -35,7 +35,7 @@ def calculate(request):
         accumulated_interest_amount = accumulated_interest_amount + interest_for_this_month
 
         next_month_amount = (calculated_values[month] + monthly_amount)
-        
+
         # depending on when the interest is paid, add to the amount
         if month is not 0 and month % interest_paid_frequency == 0:
             next_month_amount = next_month_amount + accumulated_interest_amount

@@ -14,7 +14,7 @@ export default class InterestAccumulatorPage extends Component {
 
     this.state = {
       monthlyAmount: 0,
-      savingsAmount: 0,
+      savingsAmount: 10,
       interestRate: 4,
       interestFrequency: 'monthly',
       data: []
@@ -109,8 +109,6 @@ export default class InterestAccumulatorPage extends Component {
           </select>
         </div>
         <div className="financial-display">
-          {/*We have included some sample data here, you will need to replace this
-            with your own. Feel free to change the data structure if you wish.*/}
           <DisplayGraph
             data={
               data.map((amount, index) => ({

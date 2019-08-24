@@ -8,8 +8,8 @@ export default class DisplayGraph extends Component {
     const { data } = this.props;
 
     const baseProps = {
-      width: 250,
-      height: 100,
+      width: 500,
+      height: 300,
       padding: 50,
       colorScale: ["#48C8FF", "#00b2ff", "#038AD0", "#006C9B"]
     };
