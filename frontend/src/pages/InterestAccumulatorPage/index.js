@@ -13,9 +13,10 @@ export default class InterestAccumulatorPage extends Component {
     super(props)
 
     this.state = {
+      loading: true,
       monthlyAmount: 0,
       savingsAmount: 10,
-      interestRate: 4,
+      interestRate: 1.75,
       interestFrequency: 'monthly',
       data: []
     }
@@ -40,6 +41,10 @@ export default class InterestAccumulatorPage extends Component {
 
     const { monthlyAmount, savingsAmount, interestRate, interestFrequency } = this.state
 
+    this.setState({
+      loading: true
+    })
+
     calculate({
       monthlyAmount: parseFloat(monthlyAmount),
       savingsAmount: parseFloat(savingsAmount),
@@ -63,13 +68,14 @@ export default class InterestAccumulatorPage extends Component {
 
 
   render () {
-    const { monthlyAmount, savingsAmount, interestRate, interestFrequency, data } = this.state
+    const { monthlyAmount, savingsAmount, interestRate, interestFrequency, data, loading } = this.state
 
     return (
       <div>
         <div className="financial-inputs">
           <p className="input-label">How much have you saved?</p>
           <CurrencyInput
+            className='savingsAmount'
             value={savingsAmount}
             handleChange={this.handleInputChange}
             field={'savingsAmount'}
@@ -77,6 +83,7 @@ export default class InterestAccumulatorPage extends Component {
 
           <p className="input-label">How much will you save each month?</p>
           <CurrencyInput
+            className='monthlyAmount'
             value={monthlyAmount}
             handleChange={this.handleInputChange}
             field={'monthlyAmount'}
@@ -102,13 +109,24 @@ export default class InterestAccumulatorPage extends Component {
             {INTEREST_FREQUENCY_OPTIONS.map(opt => (
               <option
                 value={opt.value}
+                key={opt.value}
               >
                 {opt.label}
               </option>
             ))}
           </select>
         </div>
+
+        {!this.validate() &&
+          <div className='input-error'>
+            Please enter valid amounts to see the results.
+          </div>
+        }
+
         <div className="financial-display">
+          {loading &&
+            <div className='loading'> Loading data... </div>
+          }
           <DisplayGraph
             data={
               data.map((amount, index) => ({
@@ -117,6 +135,7 @@ export default class InterestAccumulatorPage extends Component {
               }))
             }
           />
+
         </div>
       </div>
     )

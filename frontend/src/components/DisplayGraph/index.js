@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { VictoryLine, VictoryChart } from 'victory'
+import { VictoryLine, VictoryChart, VictoryTooltip } from 'victory'
 
 export default class DisplayGraph extends Component {
 
@@ -8,15 +8,15 @@ export default class DisplayGraph extends Component {
     const { data } = this.props;
 
     const baseProps = {
-      width: 500,
+      width: 450,
       height: 300,
-      padding: 50,
+      padding: 100,
       colorScale: ["#48C8FF", "#00b2ff", "#038AD0", "#006C9B"]
     };
 
     const baseLabelStyles = {
       fontFamily: "'Avenir Next', 'Avenir', 'Lato', 'Helvetica', 'Arial', 'Sans-Serif'",
-      fontSize: 2,
+      fontSize: 12,
       letterSpacing: 'normal',
       padding: 10,
       fill: "#00b2ff",
@@ -34,11 +34,11 @@ export default class DisplayGraph extends Component {
           axisLabel: baseLabelStyles,
           grid: {
             fill: "transparent",
-            stroke: "transparent"
+            stroke: "lightgray"
           },
           ticks: {
-            fill: "transparent",
-            size: 0,
+            fill: "lightgray",
+            // size: 0,
             stroke: "transparent"
           }
         }
@@ -58,7 +58,7 @@ export default class DisplayGraph extends Component {
     return (
       <div>
         <VictoryChart animate={{ duration: 100 }} theme={theme}>
-          <VictoryLine {...{ data }} y="amount" />
+          <VictoryLine {...{ data }} y="amount" x="month" />
         </VictoryChart>
       </div>
     );
@@ -67,4 +67,8 @@ export default class DisplayGraph extends Component {
 
 DisplayGraph.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object)
+};
+
+DisplayGraph.defaultProps = {
+  data: []
 };

@@ -18,7 +18,6 @@ export const CurrencyInput = ({
 
 
 CurrencyInput.propTypes = {
-  // value: PropTypes.string,
   handleChange: PropTypes.func,
   field: PropTypes.string
 }
